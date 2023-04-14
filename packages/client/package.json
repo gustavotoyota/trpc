@@ -1,5 +1,5 @@
 {
-  "name": "@trpc/client",
+  "name": "@deepnotes/trpc-client",
   "version": "10.20.0",
   "description": "tRPC Client lib",
   "author": "KATT",
