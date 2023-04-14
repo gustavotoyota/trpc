@@ -1,3 +1,5 @@
+import { Operation } from '../links';
+
 export interface AbortControllerEsque {
   new (): AbortControllerInstanceEsque;
 }
@@ -27,7 +29,8 @@ export interface AbortControllerInstanceEsque {
  */
 export type FetchEsque = (
   input: RequestInfo | URL | string,
-  init?: RequestInit | RequestInitEsque,
+  init: RequestInit | RequestInitEsque | undefined,
+  ops: Operation[],
 ) => Promise<ResponseEsque>;
 
 /**

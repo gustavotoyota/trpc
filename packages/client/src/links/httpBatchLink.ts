@@ -75,6 +75,7 @@ export function httpBatchLink<TRouter extends AnyRouter>(
             }
             return opts.headers;
           },
+          ops: batchOps,
         });
 
         return {

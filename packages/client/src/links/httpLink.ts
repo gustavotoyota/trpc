@@ -45,6 +45,7 @@ export function httpLink<TRouter extends AnyRouter>(
             }
             return opts.headers;
           },
+          ops: [op],
         });
 
         promise

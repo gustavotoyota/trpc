@@ -7,7 +7,12 @@ import {
   FetchEsque,
   ResponseEsque,
 } from '../../internals/types';
-import { HTTPHeaders, PromiseAndCancel, TRPCClientRuntime } from '../types';
+import {
+  HTTPHeaders,
+  Operation,
+  PromiseAndCancel,
+  TRPCClientRuntime,
+} from '../types';
 
 /**
  * @internal
@@ -113,6 +118,7 @@ export type HTTPRequestOptions = ResolvedHTTPLinkOptions &
     type: ProcedureType;
     path: string;
     headers: () => HTTPHeaders | Promise<HTTPHeaders>;
+    ops: Operation[];
   };
 
 export function httpRequest(
@@ -132,15 +138,19 @@ export function httpRequest(
         if (type === 'subscription') {
           throw new Error('Subscriptions should use wsLink');
         }
-        return opts.fetch(url, {
-          method: METHOD[type],
-          signal: ac?.signal,
-          body: body,
-          headers: {
-            'content-type': 'application/json',
-            ...headers,
+        return opts.fetch(
+          url,
+          {
+            method: METHOD[type],
+            signal: ac?.signal,
+            body: body,
+            headers: {
+              'content-type': 'application/json',
+              ...headers,
+            },
           },
-        });
+          opts.ops,
+        );
       })
       .then((_res) => {
         meta.response = _res;
